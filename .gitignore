@@ -1,0 +1,4 @@
+*.yaml
+terraform.tfvars
+config.tf
+tftpl
