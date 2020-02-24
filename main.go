@@ -67,7 +67,7 @@ func main() {
 	for _, item := range items {
 		if !item.IsDir() {
 			outputFileName := strings.TrimSuffix(item.Name(), path.Ext(item.Name()))
-			render(context, "templates/"+item.Name(), *outputDir, outputFileName)
+			render(context, *templateDir+"/"+item.Name(), *outputDir, outputFileName)
 		}
 	}
 }
