@@ -40,7 +40,8 @@ Usage of ./tftpl:
 ## Build Docker
 
 ```
-docker build .
+docker build -t ironcore864/tftpl:latest .
+docker push ironcore864/tftpl:latest
 ```
 
 ## Todo
