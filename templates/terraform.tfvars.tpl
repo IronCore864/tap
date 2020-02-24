@@ -1,19 +1,19 @@
-assume_role_from_aws_account_id="{{.AssumeRoleFromAWSAccountID}}"
+assume_role_from_aws_account_id="{{.assume_role_from_aws_account_id}}"
 
-vpc_id="{{.VPCID}}"
-worker_subnet_ids=[{{ range  $i, $e := .WorkerSubnetIDs }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]
-pod_subnet_ids=[{{ range  $i, $e := .PodSubnetIDs }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]
-harmonised_subnet_ids=[{{ range  $i, $e := .HarmonisedSubnetIDs }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]
+vpc_id="{{.vpc_id}}"
+worker_subnet_ids=[{{ range  $i, $e := .worker_subnet_ids }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]
+pod_subnet_ids=[{{ range  $i, $e := .pod_subnet_ids }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]
+harmonised_subnet_ids=[{{ range  $i, $e := .harmonised_subnet_ids }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]
 
-ssh_worker_key="{{.SSHWorkerKey}}"
-cluster_name="{{.ClusterName}}"
+cluster_name="{{.cluster_name}}"
+ssh_worker_key="{{.ssh_worker_key}}"
 
-worker_subnet_proxy_host_port="{{.WorkerSubnetProxyHostPort}}"
+worker_subnet_proxy_host_port="{{.worker_subnet_proxy_host_port}}"
 
-nat_enabled={{.NATEnabled}}
-nat_tag_worker_subnet_key="{{.NATTagWorkerSubnetKey}}"
-nat_tag_worker_subnet_value="{{.NATTagWorkerSubnetValue}}"
-nat_tag_pod_subnet_key="{{.NATTagPodSubnetKey}}"
-nat_tag_pod_subnet_value="{{.NATTagPodSubnetValue}}"
+nat_enabled={{.nat_enabled}}
+nat_tag_worker_subnet_key="{{.nat_tag_worker_subnet_key}}"
+nat_tag_worker_subnet_value="{{.nat_tag_worker_subnet_value}}"
+nat_tag_pod_subnet_key="{{.nat_tag_pod_subnet_key}}"
+nat_tag_pod_subnet_value="{{.nat_tag_pod_subnet_value}}"
 
-r53_hosted_zone_donamin_name="{{.R53HostedZoneDomainName}}"
+r53_hosted_zone_donamin_name="{{.r53_hosted_zone_donamin_name}}"

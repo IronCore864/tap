@@ -1,4 +1,9 @@
+# input
 *.yaml
+
+# output
 terraform.tfvars
-config.tf
+*.tf
+
+# executable
 tftpl

@@ -4,7 +4,7 @@ Naming: tftpl means "TerraForm TemPLating"
 
 ## Purpose
 
-Templating `config.tf` and `terraform.tfvars`.
+Templating all files under a given template directory, using input file which is in YAML format.
 
 ## Example Input and Templates
 Input example see `input/eks.yaml.example`, all are mandatory fields.
@@ -23,20 +23,18 @@ go get ./...
 
 ```
 Usage of ./tftpl:
-  -configTemplate string
-        config.tf template path and name (default "./templates/config.tf.tpl")
   -inputFile string
-        input file path and name, example: ./input/eks.yaml (default "eks.yaml")
+        input file path and name, example: ./input/eks.yaml (default "./input/eks.yaml")
   -outputDir string
         output directory, example: ./output (default ".")
-  -tfvarsTemplate string
-        terraform.tfvars template path and name (default "./templates/terraform.tfvars.tpl")
+  -templateDir string
+        directory containing all templates to be rendered, example: ./templates (default "./templates")
 ```
 
 ## Run
 
 ```
-./tftpl -inputFile ./input/eks.yaml -outputDir ./output
+./tftpl -inputFile ./input/eks.yaml -outputDir . -templateDir ./templates/
 ```
 
 ## Build Docker

@@ -1,9 +1,11 @@
-# for config.tf
+# for config.tf for all three steps in the pipeline
 region: eu-central-1
-s3_bucket: test
-s3_key: test
+tf_state_bucket: test
+step_1_s3_key: step-1-shared
+step_2_s3_key: step-2-eks
+step_3_s3_key: step-3-post-install
 
-# for terraform.tfvars
+# for terraform.tfvars used in all stages
 # account
 assume_role_from_aws_account_id: 826598248099
 # networking

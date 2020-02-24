@@ -3,69 +3,71 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
+	"path"
+	"strings"
 	"text/template"
 
-	"github.com/spf13/viper"
+	"github.com/ghodss/yaml"
 )
 
-func readInput(input string) {
-	viper.SetConfigName(filepath.Base(input))
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath(filepath.Dir(input))
-	err := viper.ReadInConfig()
+func newTemplateContext(file string) (map[string]interface{}, error) {
+	ctx := make(map[string]interface{})
+	content, err := ioutil.ReadFile(file)
 	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s", err))
+		return nil, fmt.Errorf("unable to Read configuration file: %s, error: %s", file, err)
 	}
+	ctx = make(map[string]interface{})
+	if err := yaml.Unmarshal(content, &ctx); err != nil {
+		return nil, fmt.Errorf("unable decode the configuration file: %s, error: %v", file, err)
+	}
+	return ctx, nil
 }
 
-func render(file, tempplate, outputPath string) {
-	m := map[string]interface{}{
-		"terraform.tfvars": buildTerraformTfvarsStruct(),
-		"config.tf":        buildConfigTfStruct(),
-	}
+func render(ctx interface{}, tpl, outputPath, outputFile string) {
 	if _, err := os.Stat(outputPath); os.IsNotExist(err) {
 		os.MkdirAll(outputPath, os.ModePerm)
 	}
-	output, err := os.Create(fmt.Sprintf("%s/%s", outputPath, file))
+	output, err := os.Create(fmt.Sprintf("%s/%s", outputPath, outputFile))
 	if err != nil {
-		log.Println("create file: ", err)
+		log.Println("create outputFile: ", err)
 		return
 	}
-	t, err := template.ParseFiles(tempplate)
+	t, err := template.ParseFiles(tpl)
 	if err != nil {
-		log.Println("parse file: ", err)
+		log.Println("parse template: ", err)
 		return
 	}
-	e := t.Execute(output, m[file])
+	e := t.Execute(output, ctx)
 	if e != nil {
-		log.Println("executing template:", err)
+		log.Println("executing tpl:", err)
 	}
-
 }
 
-func setupArgs() (*string, *string, *string, *string) {
-	input := flag.String("inputFile", "eks.yaml", "input file path and name, example: ./input/eks.yaml")
-	output := flag.String("outputDir", ".", "output directory, example: ./output")
-	tfvarsTpl := flag.String("tfvarsTemplate", "./templates/terraform.tfvars.tpl", "terraform.tfvars template path and name")
-	configTpl := flag.String("configTemplate", "./templates/config.tf.tpl", "config.tf template path and name")
+func setupArgs() (*string, *string, *string) {
+	input := flag.String("inputFile", "./input/eks.yaml", "input file path and name, example: ./input/eks.yaml")
+	outputDir := flag.String("outputDir", ".", "output directory, example: ./output")
+	templateDir := flag.String("templateDir", "./templates", "directory containing all templates to be rendered, example: ./templates")
 	flag.Parse()
-	return input, tfvarsTpl, configTpl, output
+	return input, outputDir, templateDir
 }
 
 func main() {
-	input, tfvarsTpl, configTpl, output := setupArgs()
+	input, outputDir, templateDir := setupArgs()
 
-	readInput(*input)
-
-	toBeRendered := map[string]string{
-		"terraform.tfvars": *tfvarsTpl,
-		"config.tf":        *configTpl,
+	context, err := newTemplateContext(*input)
+	if err != nil {
+		log.Println("parse input: ", err)
+		os.Exit(1)
 	}
 
-	for file, template := range toBeRendered {
-		render(file, template, *output)
+	items, _ := ioutil.ReadDir(*templateDir)
+	for _, item := range items {
+		if !item.IsDir() {
+			outputFileName := strings.TrimSuffix(item.Name(), path.Ext(item.Name()))
+			render(context, "templates/"+item.Name(), *outputDir, outputFileName)
+		}
 	}
 }
