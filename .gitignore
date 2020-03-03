@@ -1,9 +1,5 @@
-# input
-*.yaml
-
 # output
-terraform.tfvars
-*.tf
+*.tfvars
 
 # executable
 tftpl
