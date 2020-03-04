@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ironcore864/tftpl/utils"
+	"github.com/ironcore864/unitet/utils"
 )
 
 func TestSetupArgs(t *testing.T) {

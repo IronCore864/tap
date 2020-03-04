@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	tpl "github.com/ironcore864/tftpl/template"
+	tpl "github.com/ironcore864/unitet/template"
 )
 
 type RenderTest struct {

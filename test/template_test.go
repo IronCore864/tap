@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	tpl "github.com/ironcore864/tftpl/template"
+	tpl "github.com/ironcore864/unitet/template"
 )
 
 func rootDir() string {
