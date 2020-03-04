@@ -108,7 +108,6 @@ podTemplate(label: 'pipeline', cloud: 'kubernetes', containers: [
 				sh '/app/tftpl -inputFile ./${USER_INPUT_FILE} -outputDir ./${OUTPUT_DIR} -templateDir ./${TEMPLATE_DIR}'
 			}
 		}
-		
 		stage("XXX") {
 			// ...
 		}
