@@ -8,9 +8,10 @@ import (
 	"text/template"
 
 	"github.com/ghodss/yaml"
+	"github.com/ironcore864/unitet/utils"
 )
 
-// NewTemplateContext reads input file and returns a context used for rendering
+// NewTemplateContext reads YAML input file and returns a context used for rendering
 func NewTemplateContext(file string) (map[string]interface{}, error) {
 	ctx := make(map[string]interface{})
 
@@ -26,7 +27,7 @@ func NewTemplateContext(file string) (map[string]interface{}, error) {
 	return ctx, nil
 }
 
-// Render takes context and the template and renders the template and write to output file
+// Render renders a template with given context and output to a file
 func Render(ctx interface{}, tpl, outputPath, outputFile string) error {
 	if _, err := os.Stat(outputPath); os.IsNotExist(err) {
 		os.MkdirAll(outputPath, os.ModePerm)
@@ -49,5 +50,28 @@ func Render(ctx interface{}, tpl, outputPath, outputFile string) error {
 		return fmt.Errorf("Executing tpl: %s", err)
 	}
 
+	return nil
+}
+
+// RenderAll renders all the templates (if given input is a directory) or a single file (if given input is a file)
+func RenderAll(context map[string]interface{}, outputDir, template string, isDirectory bool) error {
+	if isDirectory {
+		items, _ := ioutil.ReadDir(template)
+		for _, item := range items {
+			if !item.IsDir() {
+				outputFileName := utils.GetOutputFilenameBasedOnFilename(item.Name())
+				err := Render(context, template+"/"+item.Name(), outputDir, outputFileName)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	} else {
+		outputFileName := utils.GetOutputFilenameBasedOnFilename(template)
+		err := Render(context, template, outputDir, outputFileName)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }

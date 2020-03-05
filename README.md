@@ -49,19 +49,21 @@ go test ./...
 
 ```
 $ ./unitet -h
-Usage of ./tftpl:
+Usage of ./unitet:
   -inputFile string
-    	input file path and name, example: ./input/eks.yaml (default "./input/eks.yaml")
+        input file path and name, example: ./input/eks.yaml (default "./input/eks.yaml")
   -outputDir string
-    	output directory, example: ./output (default ".")
-  -templateDir string
-    	directory containing all templates to be rendered, example: ./templates (default "./templates")
+        output directory, example: ./output (default ".")
+  -template string
+        if given a file, the file of the template to be rendered; if given a directory, all templates under the directory will be rendered (default "./templates")
 ```
 
 ## Run
 
 ```
-./unitet -inputFile ./test/input/test.yaml -outputDir . -templateDir ./test/templates/
+./unitet -inputFile ./test/input/test.yaml -outputDir . -template ./test/templates/
+# template can be either a directory (in which case, all templates under it will be rendered), or a file
+./unitet -inputFile ./test/input/test.yaml -outputDir . -template ./test/templates/a.tpl
 ```
 
 ## Build Docker
@@ -105,7 +107,7 @@ podTemplate(label: 'pipeline', cloud: 'kubernetes', containers: [
     stage("Render Templates") {
       container('tftpl') {
         unstash 'userinput'
-        sh '/app/tftpl -inputFile ./${USER_INPUT_FILE} -outputDir ./${OUTPUT_DIR} -templateDir ./${TEMPLATE_DIR}'
+        sh '/app/tftpl -inputFile ./${USER_INPUT_FILE} -outputDir ./${OUTPUT_DIR} -template ./${TEMPLATE_DIR}'
       }
     }
     stage("XXX") {
