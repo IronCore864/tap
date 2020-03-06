@@ -17,7 +17,7 @@ func TestSetupArgs(t *testing.T) {
 		"expected": map[string][]string{
 			"normal":  []string{"in.yaml", "out", "templates"},
 			"file":    []string{"in.yaml", "out", "a.tpl"},
-			"default": []string{"./input/eks.yaml", ".", "./templates"},
+			"default": []string{"", ".", ""},
 		},
 	}
 	for name, args := range tests["args"] {

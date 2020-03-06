@@ -33,6 +33,12 @@ func TestTemplateContext(t *testing.T) {
 			},
 			""},
 		&TemplateTest{
+			rootDir() + "/test/input/test.json",
+			map[string]interface{}{
+				"vpc_id": "vpc-025c50ddacb9519fd",
+			},
+			""},
+		&TemplateTest{
 			rootDir() + "/test/input/not_exist.yaml",
 			nil,
 			"Unable to read configuration file"},
