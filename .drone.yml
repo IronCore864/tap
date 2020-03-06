@@ -10,5 +10,5 @@ steps:
   image: golang
   commands:
   - go get ./...
-  - go test
+  - go test ./...
   - go build
