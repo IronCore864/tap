@@ -8,7 +8,7 @@ import (
 	"text/template"
 
 	"github.com/ghodss/yaml"
-	"github.com/ironcore864/unitet/utils"
+	"github.com/ironcore864/tap/utils"
 )
 
 // NewTemplateContext reads YAML input file and returns a context used for rendering

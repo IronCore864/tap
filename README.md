@@ -1,6 +1,6 @@
 # Universal Template Tool
 
-Naming: unitet means UNIversal TEmplate Tool.
+Naming: tap means UNIversal TEmplate Tool.
 
 The naming convention here is my way of paying tribute to redis (REmote DIctionary Server).
 
@@ -48,8 +48,8 @@ go test ./...
 ## Usage
 
 ```
-$ ./unitet -h
-Usage of ./unitet:
+$ ./tap -h
+Usage of ./tap:
   -inputFile string
         input file path and name, example: ./input/eks.yaml (default "./input/eks.yaml")
   -outputDir string
@@ -61,23 +61,23 @@ Usage of ./unitet:
 ## Run
 
 ```
-./unitet -inputFile ./test/input/test.yaml -outputDir . -template ./test/templates/
+./tap -inputFile ./test/input/test.yaml -outputDir . -template ./test/templates/
 # template can be either a directory (in which case, all templates under it will be rendered), or a file
-./unitet -inputFile ./test/input/test.yaml -outputDir . -template ./test/templates/a.tpl
+./tap -inputFile ./test/input/test.yaml -outputDir . -template ./test/templates/a.tpl
 ```
 
 ## Build Docker
 
 ```
-docker build -t ironcore864/unitet:latest .
-docker push ironcore864/unitet:latest
+docker build -t ironcore864/tap:latest .
+docker push ironcore864/tap:latest
 ```
 
 ## Run in Docker
 
 ```
-docker pull ironcore864/unitet:latest
-docker run -it ironcore864/unitet:latest
+docker pull ironcore864/tap:latest
+docker run -it ironcore864/tap:latest
 ```
 
 ## Use with Jenkins Pipeline with Kubernetes Plugin in a Multi-Container Pipeline

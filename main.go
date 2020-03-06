@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	tpl "github.com/ironcore864/unitet/template"
-	"github.com/ironcore864/unitet/utils"
+	tpl "github.com/ironcore864/tap/template"
+	"github.com/ironcore864/tap/utils"
 )
 
 func main() {
