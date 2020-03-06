@@ -84,8 +84,8 @@ docker run -it ironcore864/tap:latest
 
 ```
 podTemplate(label: 'pipeline', cloud: 'kubernetes', containers: [
-  containerTemplate(name: 'tftpl', 
-    image: 'docker.io/ironcore864/tftpl:latest', 
+  containerTemplate(name: 'tap', 
+    image: 'docker.io/ironcore864/tap:latest', 
     alwaysPullImage: true,
     ttyEnabled: true,
     args: '',
@@ -105,9 +105,9 @@ podTemplate(label: 'pipeline', cloud: 'kubernetes', containers: [
   ]) {
   node('pipeline') {
     stage("Render Templates") {
-      container('tftpl') {
+      container('tap') {
         unstash 'userinput'
-        sh '/app/tftpl -inputFile ./${USER_INPUT_FILE} -outputDir ./${OUTPUT_DIR} -template ./${TEMPLATE_DIR}'
+        sh '/app/tap -inputFile ./${USER_INPUT_FILE} -outputDir ./${OUTPUT_DIR} -template ./${TEMPLATE_DIR}'
       }
     }
     stage("XXX") {
