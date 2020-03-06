@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ironcore864/unitet/utils"
+	"github.com/ironcore864/tap/utils"
 )
 
 func TestSetupArgs(t *testing.T) {
