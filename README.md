@@ -1,10 +1,10 @@
-# Universal Template Tool
+# Template Tool in Golang for All Purpose
 
-Naming: tap means UNIversal TEmplate Tool.
+Naming: tap means Template All Product.
 
-The naming convention here is my way of paying tribute to redis (REmote DIctionary Server).
+It's a tool written in Golang, which takes yaml (or json) as input, and renders templates in Golang syntax.
 
-It's easy to pronounce, say, than, "utt" (Universal Template Tool), or its original name "tftpl" (TerraForm TemPLate tool, which is why it was created in the first place).
+Can be used for all kinds of purposes, hence the name, TAP.
 
 ## Purpose
 
