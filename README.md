@@ -49,6 +49,18 @@ go build
 go test ./...
 ```
 
+Coverage:
+
+```
+go test ./... -coverprofile=c.out
+```
+
+View coverage as html:
+
+```
+go tool cover -html=c.out
+```
+
 ## Usage
 
 ```

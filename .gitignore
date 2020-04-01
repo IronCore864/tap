@@ -1,5 +1,6 @@
 # output
 *.tfvars
+template/test/output/*
 
 # executable
 tap
