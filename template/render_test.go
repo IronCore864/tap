@@ -1,9 +1,7 @@
-package test
+package template
 
 import (
 	"testing"
-
-	tpl "github.com/ironcore864/tap/template"
 )
 
 type RenderTest struct {
@@ -20,14 +18,14 @@ func TestRender(t *testing.T) {
 			map[string]interface{}{
 				"vpc_id": "vpc-025c50ddacb9519fd",
 			},
-			rootDir() + "/test/templates/test.tfvars.tpl",
-			rootDir() + "/test/output/",
+			rootDir() + "/template/test/templates/test.tfvars.tpl",
+			rootDir() + "/template/test/output/",
 			"test.tfvars",
 			"",
 		},
 	}
 	for _, test := range tests {
-		err := tpl.Render(test.context, test.template, test.outputDir, test.outputFilename)
+		err := Render(test.context, test.template, test.outputDir, test.outputFilename)
 		if err != nil {
 			t.Errorf("Err: %s", err.Error())
 		}
@@ -47,21 +45,21 @@ func TestRenderAll(t *testing.T) {
 			map[string]interface{}{
 				"vpc_id": "vpc-025c50ddacb9519fd",
 			},
-			rootDir() + "/test/output/",
-			rootDir() + "/test/templates/test.tfvars.tpl",
+			rootDir() + "/template/test/output/",
+			rootDir() + "/template/test/templates/test.tfvars.tpl",
 			false,
 		},
 		&RenderAllTest{
 			map[string]interface{}{
 				"vpc_id": "vpc-025c50ddacb9519fd",
 			},
-			rootDir() + "/test/output/",
-			rootDir() + "/test/templates/",
+			rootDir() + "/template/test/output/",
+			rootDir() + "/template/test/templates/",
 			true,
 		},
 	}
 	for _, test := range tests {
-		err := tpl.RenderAll(test.context, test.outputDir, test.template, test.isDirectory)
+		err := RenderAll(test.context, test.outputDir, test.template, test.isDirectory)
 		if err != nil {
 			t.Errorf("Err: %s", err.Error())
 		}

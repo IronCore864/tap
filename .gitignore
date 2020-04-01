@@ -3,3 +3,6 @@
 
 # executable
 tap
+
+# test profile output
+c.out

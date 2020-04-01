@@ -1,4 +1,4 @@
-package test
+package template
 
 import (
 	"fmt"
@@ -8,8 +8,6 @@ import (
 	"runtime"
 	"strings"
 	"testing"
-
-	tpl "github.com/ironcore864/tap/template"
 )
 
 func rootDir() string {
@@ -27,30 +25,30 @@ type TemplateTest struct {
 func TestTemplateContext(t *testing.T) {
 	tests := []*TemplateTest{
 		&TemplateTest{
-			rootDir() + "/test/input/test.yaml",
+			rootDir() + "/template/test/input/test.yaml",
 			map[string]interface{}{
 				"vpc_id": "vpc-025c50ddacb9519fd",
 			},
 			""},
 		&TemplateTest{
-			rootDir() + "/test/input/test.json",
+			rootDir() + "/template/test/input/test.json",
 			map[string]interface{}{
 				"vpc_id": "vpc-025c50ddacb9519fd",
 			},
 			""},
 		&TemplateTest{
-			rootDir() + "/test/input/not_exist.yaml",
+			rootDir() + "/template/test/input/not_exist.yaml",
 			nil,
 			"Unable to read configuration file"},
 		&TemplateTest{
-			rootDir() + "/test/input/error.yaml",
+			rootDir() + "/template/test/input/error.yaml",
 			nil,
 			"Unable decode the configuration file"},
 	}
 
 	for _, test := range tests {
 		fmt.Println(test.inputFile)
-		ctx, err := tpl.NewTemplateContext(test.inputFile)
+		ctx, err := NewTemplateContext(test.inputFile)
 		if test.err == "" && err != nil {
 			t.Errorf("Expected err: %s, got: %s", test.err, err.Error())
 		}

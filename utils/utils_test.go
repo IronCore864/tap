@@ -1,10 +1,8 @@
-package test
+package utils
 
 import (
 	"os"
 	"testing"
-
-	"github.com/ironcore864/tap/utils"
 )
 
 func TestSetupArgs(t *testing.T) {
@@ -22,7 +20,7 @@ func TestSetupArgs(t *testing.T) {
 	}
 	for name, args := range tests["args"] {
 		os.Args = args
-		in, out, template := utils.SetupArgs()
+		in, out, template := SetupArgs()
 		res := []string{in, out, template}
 		for i := 0; i < len(res); i++ {
 			if res[i] != tests["expected"][name][i] {
@@ -38,7 +36,7 @@ func TestGetOutputFilenameBasedOnFilename(t *testing.T) {
 		"/path/to/test.var.tpl": "test.var",
 	}
 	for tpl, expected := range tests {
-		got := utils.GetOutputFilenameBasedOnFilename(tpl)
+		got := GetOutputFilenameBasedOnFilename(tpl)
 		if expected != got {
 			t.Errorf("Error getting filename based on template, expected: %s, got %s", expected, got)
 		}
@@ -47,11 +45,11 @@ func TestGetOutputFilenameBasedOnFilename(t *testing.T) {
 
 func TestIsDirectory(t *testing.T) {
 	tests := map[string]bool{
-		"input":         true,
+		"../utils":      true,
 		"utils.test.go": false,
 	}
 	for file, expected := range tests {
-		got, _ := utils.IsDirectory(file)
+		got, _ := IsDirectory(file)
 		if got != expected {
 			t.Errorf("Error detecting if input is directory or not,  expected: %t, got %t", expected, got)
 		}
