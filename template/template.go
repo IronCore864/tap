@@ -1,10 +1,12 @@
 package template
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"text/template"
 
 	"github.com/ghodss/yaml"
@@ -27,6 +29,10 @@ func NewTemplateContext(file string) (map[string]interface{}, error) {
 	return ctx, nil
 }
 
+func base64encode(data string) string {
+	return base64.StdEncoding.EncodeToString([]byte(data))
+}
+
 // Render renders a template with given context and output to a file
 func Render(ctx interface{}, tpl, outputPath, outputFile string) error {
 	if _, err := os.Stat(outputPath); os.IsNotExist(err) {
@@ -39,7 +45,8 @@ func Render(ctx interface{}, tpl, outputPath, outputFile string) error {
 		return fmt.Errorf("Create outputFile: %s", err)
 	}
 
-	t, err := template.ParseFiles(tpl)
+	funcs := template.FuncMap{"base64encode": base64encode}
+	t, err := template.New(filepath.Base(tpl)).Option("missingkey=error").Funcs(funcs).ParseFiles(tpl)
 	if err != nil {
 		log.Println("Parse template: ", err)
 		return fmt.Errorf("Parse template: %s", err)
