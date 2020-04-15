@@ -12,3 +12,12 @@ steps:
   - go get ./...
   - go test ./...
   - go build
+- name: docker  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: ironcore864/tap
+    tags: latest
